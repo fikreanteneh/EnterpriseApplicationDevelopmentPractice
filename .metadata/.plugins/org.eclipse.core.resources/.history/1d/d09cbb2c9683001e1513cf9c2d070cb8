@@ -1,0 +1,49 @@
+package com.employee;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+
+
+@WebServlet("/AddEmployee")
+public class AddEmployee extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+    public AddEmployee() {
+        // TODO Auto-generated constructor stub
+    }
+    
+    
+    public void service(
+    		HttpServletRequest req,
+    		HttpServletResponse resp)
+
+    		{
+    		//Retrieve values of num1 and num2 from the request
+    		int n1 = Integer.parseInt(req.getParameter("num1"));
+    		int n2 = Integer.parseInt(req.getParameter("num2"));
+
+    		System.out.println(n1 + n2);
+    		}
+    
+	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException{
+		PrintWriter pw = res.getWriter();
+		pw.println("Use This To Add");
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		String num1 = request.getParameter("num1");
+		String num2 = request.getParameter("num2");
+		doGet(request, response);
+	}
+
+}

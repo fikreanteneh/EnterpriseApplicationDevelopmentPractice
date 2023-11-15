@@ -1,0 +1,14 @@
+package com.employee;
+
+import jakarta.servlet.ServletException;
+
+
+@WebServlet("/servlet")
+public class HelloWorld extends HttpServlet {
+protected void doGet(HttpServletRequest req,
+HttpServletResponse res){
+
+PrintWriter pw = res.getWriter();
+pw.println("Hello World");
+}
+}
