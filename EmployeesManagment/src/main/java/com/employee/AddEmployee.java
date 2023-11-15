@@ -7,6 +7,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 
 
@@ -20,8 +23,6 @@ public class AddEmployee extends HttpServlet {
     
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		
-		System.out.println("==========================================================");
 		request.getRequestDispatcher("AddEmployee.html").forward(request, response);
 	}
 
@@ -33,7 +34,32 @@ public class AddEmployee extends HttpServlet {
 		String name = request.getParameter("name");
 		String designation = request.getParameter("designation");
 		double salary = Double.parseDouble(request.getParameter("salary"));
-		System.out.println(name + designation);
+		String query = "INSERT INTO employee (name, designation, salary) VALUES ('" + name + "', '" + designation + "', " + salary + ")";
+		Connection connection = DBManager.getConnection();
+		PrintWriter out = response.getWriter();
+        try {
+        	PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.execute();
+			 response.setContentType("text/html");
+             out.println("<html><body>");
+             out.println("<script>");
+             out.println("alert('Employee added successfully!');");
+             out.println("history.go(-1);");
+             out.println("</script>");
+             out.println("</body></html>");
+             out.close();
+             
+		} catch (SQLException e) {
+			e.printStackTrace();
+			 response.setContentType("text/html");
+             out.println("<html><body>");
+             out.println("<script>");
+             out.println("alert('Something Went Wrong');");
+             out.println("history.go(-1);");
+             out.println("</script>");
+             out.println("</body></html>");
+             out.close();
+		}
 	}
 
 }

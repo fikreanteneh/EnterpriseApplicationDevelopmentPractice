@@ -140,7 +140,7 @@
              Note: The pattern used is equivalent to using pattern="common" -->
         <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs" pattern="%h %l %u %t &quot;%r&quot; %s %b" prefix="localhost_access_log" suffix=".txt"/>
 
-      <Context docBase="C:\Users\fikre\OneDrive\Desktop\Projects\EnterpriseApplicationDevelopmentPractice\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\ROOT" path="" reloadable="false"/><Context docBase="C:\Users\fikre\OneDrive\Desktop\Projects\EnterpriseApplicationDevelopmentPractice\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\EmployeesManagment" path="/EmployeesManagment" reloadable="true" source="org.eclipse.jst.jee.server:EmployeesManagment"/></Host>
+      <Context docBase="C:\Users\fikre\OneDrive\Desktop\Projects\EnterpriseApplicationDevelopmentPractice\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\ROOT" path="" reloadable="false"/><Context docBase="C:\Users\fikre\OneDrive\Desktop\Projects\EnterpriseApplicationDevelopmentPractice\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\EmployeesManagment" path="/EmployeesManagment" reloadable="true" source="org.eclipse.jst.jee.server:EmployeesManagment"/><Context docBase="C:\Users\fikre\OneDrive\Desktop\Projects\EnterpriseApplicationDevelopmentPractice\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\Calculator" path="/Calculator" reloadable="true" source="org.eclipse.jst.jee.server:Calculator"/></Host>
     </Engine>
   </Service>
 </Server>
