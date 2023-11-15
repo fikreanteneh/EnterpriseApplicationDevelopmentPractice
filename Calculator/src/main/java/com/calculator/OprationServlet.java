@@ -7,10 +7,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+
 
 
 
@@ -23,8 +20,6 @@ public class OprationServlet extends HttpServlet {
     }
     
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		double num1 = Integer.parseInt(request.getParameter("num1"));
-		double num2 = Integer.parseInt(request.getParameter("num2"));
 		String operation = request.getParameter("operation");
 		switch(operation) {
 			case "addition":
