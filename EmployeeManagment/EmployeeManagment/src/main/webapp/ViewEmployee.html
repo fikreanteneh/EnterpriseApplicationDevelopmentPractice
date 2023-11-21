@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Display Data</title>
+</head>
+<body>
+
+<h1>Data from Database</h1>
+
+<%
+    List<Map<String, String>> dataList = (List<Map<String, String>>) request.getAttribute("dataList");
+
+    if (dataList != null && !dataList.isEmpty()) {
+        for (Map<String, String> dataMap : dataList) {
+%>
+            <ul>
+                <li><strong>Column 1:</strong> <%= dataMap.get("column_name1") %></li>
+                <li><strong>Column 2:</strong> <%= dataMap.get("column_name2") %></li>
+                <!-- Add more list items for additional columns as needed -->
+            </ul>
+<%
+        }
+    } else {
+%>
+        <p>No data available.</p>
+<%
+    }
+%>
+
+</body>
+</html>
