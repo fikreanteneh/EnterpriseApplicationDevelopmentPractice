@@ -33,7 +33,7 @@ public class ViewEmployee extends HttpServlet {
             out.println("<html><body>");
             out.println("<h2>List of Employees</h2>");
             out.println("<table border='1'>");
-            out.println("<tr><th>ID</th><th>Name</th><th>Designation</th><th>Salary</th></tr>");
+            out.println("<tr><th>ID</th><th>Name</th><th>Designation</th><th>Salary</th><th>Deletion</th><th>Edit</th></tr>");
 
             while (resultSet.next()) {
                 out.println("<tr>");
@@ -41,6 +41,8 @@ public class ViewEmployee extends HttpServlet {
                 out.println("<td>" + resultSet.getString("name") + "</td>");
                 out.println("<td>" + resultSet.getString("designation") + "</td>");
                 out.println("<td>" + resultSet.getDouble("salary") + "</td>");
+                out.println("<td>" + "<a href='/EmployeeManagment/DeleteEmployee?id=" + resultSet.getInt("id")  + "'>DeleteEmployee</a>" + "</td>");
+                out.println("<td>" + "<a href='/EmployeeManagment/EditEmployee?id=" + resultSet.getInt("id")  + "'>EditEmployee</a>" + "</td>");
                 out.println("</tr>");
             }
 
