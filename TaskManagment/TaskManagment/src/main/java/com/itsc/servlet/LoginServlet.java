@@ -30,6 +30,7 @@ public class LoginServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
+		HttpSession session = request.getSession(false);
 	
 		Connection connection = DBManager.getConnection();
         try {
@@ -39,11 +40,6 @@ public class LoginServlet extends HttpServlet {
         	pstmt.setString(2, password);
         	ResultSet rs = pstmt.executeQuery();
         	if(rs.next()) {
-        		User user = new User();
-        		user.setName(rs.getString("name"));
-        		user.setEmail(email);
-        		HttpSession session = request.getSession();
-                session.setAttribute("user", user);
         		response.sendRedirect("welcome.jsp");
         	}else {
         		response.sendRedirect("signin.jsp");
