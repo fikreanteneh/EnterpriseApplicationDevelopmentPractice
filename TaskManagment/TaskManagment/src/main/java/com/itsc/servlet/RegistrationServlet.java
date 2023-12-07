@@ -30,6 +30,7 @@ public class RegistrationServlet extends HttpServlet {
 		String name = request.getParameter("name");
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
+		System.out.println(name + email + password);
         try {
         	User.Register(name, email, password);
         	request.setAttribute("Succesfull", "Successfully Registered");

@@ -27,7 +27,6 @@ import jakarta.servlet.http.HttpSession;
 
 @WebServlet("/Login")
 public class LoginServlet extends HttpServlet {
-
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
@@ -38,18 +37,18 @@ public class LoginServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
+		System.out.println(email + password);
         try {
         	User user = User.getUserByEmailAndPassword(email, password);
+        	System.out.println(user);
         	request.setAttribute("User", user );
             Cookie cookie = new Cookie("email", user.email);
             cookie.setMaxAge(3600*24*7);
             response.addCookie(cookie);
-        	request.getRequestDispatcher("/Task").forward(request, response);
+        	response.sendRedirect("/Task");
 		} catch (Exception e) {
 			request.setAttribute("Error", e.getMessage());
 			request.getRequestDispatcher("login.jsp").forward(request, response);
 		}
 	}
-	
-	
 }

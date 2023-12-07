@@ -9,19 +9,15 @@ import com.itsc.config.DBManager;
 
 import jakarta.servlet.ServletException;
 
-public class User {
-	public int id;
+public class Task {
 	public String name;
 	public String email;
-	public String password = "";
-	public User(String name, String email) {
+	public String password;
+	public Task(String name, String email) {
 		this.email = email;
 		this.name = name;
-	};
-	
-	public User(int id, String name, String email) {
-		this.email = email;
-		this.name = name;
+		
+		
 	};
 	
 	
@@ -33,7 +29,7 @@ public class User {
     	pstmt.setString(1, email);
     	ResultSet rs = pstmt.executeQuery();
     	if(rs.next()) {
-    		return new User ( Integer.parseInt(rs.getString("id")), rs.getString("email"), rs.getString("name"));
+    		return new User (rs.getString("email"), rs.getString("name"));
     	}
     	throw new ServletException("User not found");
 	}
@@ -46,7 +42,7 @@ public class User {
     	pstmt.setString(2, password);
     	ResultSet rs = pstmt.executeQuery();
     	if(rs.next()) {
-    		return new User ( Integer.parseInt(rs.getString("id")), rs.getString("email"), rs.getString("name"));
+    		return new User (rs.getString("email"), rs.getString("name"));
     	}
     	throw new ServletException("User not found");
 	}
