@@ -13,7 +13,10 @@ import java.util.List;
 import com.itsc.config.DBManager;
 import com.itsc.model.User;
 
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -22,32 +25,31 @@ import jakarta.servlet.http.HttpSession;
 
 
 
-@WebServlet("/LoginServlet")
+@WebServlet("/Login")
 public class LoginServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException{
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
+		request.getRequestDispatcher("login.jsp").forward(request, response);
+	}
+	
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
-		HttpSession session = request.getSession(false);
-	
-		Connection connection = DBManager.getConnection();
         try {
-        	String query = "select * from users where email = ? AND password = ?";
-        	PreparedStatement pstmt = connection.prepareStatement(query);
-        	pstmt.setString(1, email);
-        	pstmt.setString(2, password);
-        	ResultSet rs = pstmt.executeQuery();
-        	if(rs.next()) {
-        		response.sendRedirect("welcome.jsp");
-        	}else {
-        		response.sendRedirect("signin.jsp");
-        	}
-
+        	User user = User.getUserByEmailAndPassword(email, password);
+        	request.setAttribute("User", user );
+            Cookie cookie = new Cookie("email", user.email);
+            cookie.setMaxAge(3600*24*7);
+            response.addCookie(cookie);
+        	request.getRequestDispatcher("/Task").forward(request, response);
 		} catch (Exception e) {
-			System.out.println(e);
-			response.sendRedirect("error.jsp");
+			request.setAttribute("Error", e.getMessage());
+			request.getRequestDispatcher("login.jsp").forward(request, response);
 		}
 	}
+	
+	
 }

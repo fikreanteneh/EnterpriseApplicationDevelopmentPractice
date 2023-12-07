@@ -12,6 +12,7 @@ import java.util.List;
 import com.itsc.config.DBManager;
 import com.itsc.model.User;
 
+import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,34 +21,26 @@ import jakarta.servlet.http.HttpServletResponse;
 
 
 
-@WebServlet("/RegistrationServlet")
+@WebServlet("/Registration")
 public class RegistrationServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException{
-		System.out.print(false);
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
 		String name = request.getParameter("name");
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
-		System.out.print(name + email + password);
-	
-		User user = new User();
-		user.setName(name);
-		user.setEmail(email);
-		user.setPassword(password);
-		
-		String query = "INSERT INTO users (name, email, password) VALUES ('" + name + "', '" + email + "', " + password + ")";
-		Connection connection = DBManager.getConnection();
         try {
-        	PreparedStatement preparedStatement = connection.prepareStatement(query);
-        	preparedStatement.execute(); 
-			response.sendRedirect("confirmation.jsp");
-
+        	User.Register(name, email, password);
+        	request.setAttribute("Succesfull", "Successfully Registered");
 		} catch (Exception e) {
 			System.out.println(e);
-			response.sendRedirect("error.jsp");
-
+			request.setAttribute("Error", e.getMessage());
 		}
+        request.getRequestDispatcher("register.jsp").forward(request, response);
+	}
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
+        request.getRequestDispatcher("register.jsp").forward(request, response);
 	}
 }
