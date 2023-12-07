@@ -25,21 +25,14 @@ import jakarta.servlet.http.HttpSession;
 
 
 
-@WebServlet("/Logout")
-public class LogoutServlet extends HttpServlet {
+@WebServlet("/Task")
+public class TaskServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
-		 request.getSession().invalidate();
-	        Cookie[] cookies = request.getCookies();
-	        if (cookies != null) {
-	            for (Cookie cookie : cookies) {
-	                cookie.setMaxAge(0);
-	                response.addCookie(cookie);
-	            }
-	        }
-	        request.getRequestDispatcher("login.jsp").forward(request, response);
-	    }
-	}	
-	
+		User user = (User)request.getAttribute("user");
+		
+		request.getRequestDispatcher("confirmation.jsp").forward(request, response); 
+	}		
+}
