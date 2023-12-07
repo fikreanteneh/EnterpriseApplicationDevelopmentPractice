@@ -4,14 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Successful</title>
+<title>Insert title here</title>
 </head>
 <body>
-<h1>Successfully Registered</h1>
-<p>Your registration is complete.
-You can now <a href="signin.jsp">login</a>
-to your account.
-</p>
 
 </body>
 </html>

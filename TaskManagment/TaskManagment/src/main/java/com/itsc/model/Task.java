@@ -4,59 +4,82 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.itsc.config.DBManager;
 
 import jakarta.servlet.ServletException;
 
 public class Task {
-	public String name;
-	public String email;
-	public String password;
-	public Task(String name, String email) {
-		this.email = email;
-		this.name = name;
-		
-		
+	public int id;
+	public int userid;
+	public String title;
+	public String description;
+	public String priority;
+	public Task(int userid, String title, String description, String priority) {
+		this.userid = userid;
+		this.title = title;
+		this.description = description;
+		this.priority = priority;
+	};
+	public Task(int id, int userid, String title, String description, String priority) {
+		this.id = id;
+		this.userid = userid;
+		this.title = title;
+		this.description = description;
+		this.priority = priority;
 	};
 	
 	
 	
-	public static User getUserByEmail(String email) throws Exception {
-		Connection connection = DBManager.getConnection();
-    	String query = "select * from users where email = ?";
-    	PreparedStatement pstmt = connection.prepareStatement(query);
-    	pstmt.setString(1, email);
-    	ResultSet rs = pstmt.executeQuery();
-    	if(rs.next()) {
-    		return new User (rs.getString("email"), rs.getString("name"));
-    	}
-    	throw new ServletException("User not found");
+	public static List<Task> getTasksByUser(int userid) throws Exception {
+        Connection connection = DBManager.getConnection();
+        String query = "SELECT * FROM tasks WHERE userid = ?";
+        PreparedStatement pstmt = connection.prepareStatement(query);
+        pstmt.setInt(1, userid);
+        ResultSet rs = pstmt.executeQuery();
+        List<Task> tasks = new ArrayList<Task>();
+        while (rs.next()) {
+            int taskId = rs.getInt("id");
+            String title = rs.getString("title");
+            String description = rs.getString("description");
+            String priority = rs.getString("priority");
+            tasks.add(new Task(taskId, userid, title, description, priority));
+        }
+        return tasks;
+    	
 	}
 	
-	public static User getUserByEmailAndPassword(String email, String password) throws Exception {
-		Connection connection = DBManager.getConnection();
-    	String query = "select * from users where email = ? AND password = ?";
-    	PreparedStatement pstmt = connection.prepareStatement(query);
-    	pstmt.setString(1, email);
-    	pstmt.setString(2, password);
-    	ResultSet rs = pstmt.executeQuery();
-    	if(rs.next()) {
-    		return new User (rs.getString("email"), rs.getString("name"));
-    	}
-    	throw new ServletException("User not found");
-	}
-	
-	public static void Register(String name, String email, String password) throws Exception {
-		Connection connection = DBManager.getConnection();
-		String query = "INSERT INTO users (name, email, password) VALUES (?, ?, ?)";
-    	PreparedStatement pstmt = connection.prepareStatement(query);
-    	pstmt.setString(1, name);
-    	pstmt.setString(2, email);
-    	pstmt.setString(3, password);
-    	pstmt.executeUpdate();
+	public static void addTask(int userid, String title, String description, String priority) throws SQLException {
+        Connection connection = DBManager.getConnection();
+        String query = "INSERT INTO tasks (userid, title, description, priority) VALUES (?, ?, ?, ?)";
+        PreparedStatement pstmt = connection.prepareStatement(query);
+        pstmt.setInt(1, userid);
+        pstmt.setString(2, title);
+        pstmt.setString(3, description);
+        pstmt.setString(4, priority);
+        pstmt.executeUpdate();
+    }
 
-	}
+    public static void deleteTask(int taskId) throws SQLException {
+        Connection connection = DBManager.getConnection();
+        String query = "DELETE FROM tasks WHERE id = ?";
+        PreparedStatement pstmt = connection.prepareStatement(query);
+        pstmt.setInt(1, taskId);
+        pstmt.executeUpdate();
+    }
+
+    public static void updateTask(int taskId, String title, String description, String priority) throws SQLException {
+        Connection connection = DBManager.getConnection();
+        String query = "UPDATE tasks SET title = ?, description = ?, priority = ? WHERE id = ?";
+        PreparedStatement pstmt = connection.prepareStatement(query);
+        pstmt.setString(1, title);
+        pstmt.setString(2, description);
+        pstmt.setString(3, priority);
+        pstmt.setInt(4, taskId);
+        pstmt.executeUpdate();
+    }
 	
 
 }
