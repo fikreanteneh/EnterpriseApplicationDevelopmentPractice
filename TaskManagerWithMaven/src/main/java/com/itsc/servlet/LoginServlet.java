@@ -2,6 +2,8 @@ package com.itsc.servlet;
 
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import com.itsc.model.User;
 
 import jakarta.servlet.ServletException;
@@ -11,9 +13,13 @@ import jakarta.servlet.http.*;
 
 @WebServlet("/Login")
 public class LoginServlet extends HttpServlet {
+
+
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
+		PrintWriter out = response.getWriter();
+		out.println("Yes");
 		request.getRequestDispatcher("login.jsp").forward(request, response);
 	}
 	

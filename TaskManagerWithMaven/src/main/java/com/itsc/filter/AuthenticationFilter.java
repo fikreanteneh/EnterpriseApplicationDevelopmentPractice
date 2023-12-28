@@ -17,7 +17,8 @@ import jakarta.servlet.http.HttpSession;
 public class AuthenticationFilter implements Filter {
 
     public void init(FilterConfig config) throws ServletException {
-    }
+
+	}
     public void destroy() {
 
     }
@@ -25,17 +26,23 @@ public class AuthenticationFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain filter)
 			throws IOException, ServletException {
+		FilterConfig config = getFilter
 		 	HttpServletRequest httpRequest = (HttpServletRequest) request;
 	        HttpServletResponse httpResponse = (HttpServletResponse) response;
 //	        HttpSession session =httpRequest.getSession();
 //	        String path = httpRequest.getRequestURI().substring(httpRequest.getContextPath().length());
 			Cookie[] cookies = ((HttpServletRequest) request).getCookies();
+			System.out.println("RRRRRRRRRRRRRRRRRR");
 			Map<String, String> hashMap = new HashMap<>();
-			for (Cookie cookie: cookies) {
-				hashMap.put(cookie.getName(), cookie.getValue());
-			}
+		System.out.println("RRRRRRRRRRRRRRRRRR");
+
+		System.out.println("RRRRRRRRRRRRRRRRRR");
 	        User user = null;
 	        try {
+				for (Cookie cookie: cookies) {
+					hashMap.put(cookie.getName(), cookie.getValue());
+				}
+				System.out.println("RRRRRRRRRRRRRRRRRR");
 				user = User.getUserByEmail((hashMap.get("email")));
 				request.setAttribute("User", user);
 	        }
